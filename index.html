@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escuta ao Vivo</title>
+</head>
+<body>
+    <h1>Escuta ao Vivo</h1>
+    <div id="audioPlayer"></div>
+
+    <script>
+        const websocket = new WebSocket('ws://26.208.93.3:2401'); // Endereço do servidor WebSocket
+
+        websocket.onmessage = function (event) {
+            const audioData = event.data;
+            const audioBlob = new Blob([audioData], { type: 'audio/wav' });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.innerHTML = `<audio controls src="${audioUrl}"></audio>`;
+        };
+
+        websocket.onopen = function () {
+            console.log('Conectado ao servidor.');
+        };
+
+        websocket.onerror = function (event) {
+            console.error('Erro na conexão com o servidor:', event);
+        };
+
+        websocket.onclose = function () {
+            console.log('Conexão encerrada com o servidor.');
+        };
+    </script>
+</body>
+</html>
