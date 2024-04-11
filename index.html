@@ -10,7 +10,7 @@
     <div id="audioPlayer"></div>
 
     <script>
-        const websocket = new WebSocket('ws://26.208.93.3:2401'); // Endereço do servidor WebSocket
+        const websocket = new WebSocket('wss://26.208.93.3:2401'); // Endereço do servidor WebSocket
 
         websocket.onmessage = function (event) {
             const audioData = event.data;
